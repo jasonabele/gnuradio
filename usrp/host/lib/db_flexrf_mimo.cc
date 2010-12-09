@@ -80,6 +80,30 @@ db_flexrf_2400_rx_mimo_b::_refclk_divisor()
   return 1;
 }
 
+db_flexrf_2200_tx_mimo_b::db_flexrf_2200_tx_mimo_b(usrp_basic_sptr usrp, int which)
+  : db_flexrf_2200_tx(usrp, which)
+{
+  d_common->R_DIV(16);
+}
+
+int 
+db_flexrf_2200_tx_mimo_b::_refclk_divisor()
+{
+  return 1;
+}
+
+db_flexrf_2200_rx_mimo_b::db_flexrf_2200_rx_mimo_b(usrp_basic_sptr usrp, int which)
+  : db_flexrf_2200_rx(usrp, which)
+{
+  d_common->R_DIV(16);
+}
+
+int 
+db_flexrf_2200_rx_mimo_b::_refclk_divisor()
+{
+  return 1;
+}
+
 db_flexrf_1800_tx_mimo_a::db_flexrf_1800_tx_mimo_a(usrp_basic_sptr usrp, int which)
   : db_flexrf_1800_tx(usrp, which)
 {

@@ -50,6 +50,21 @@ class db_flexrf_2400_rx_mimo_b : public db_flexrf_2400_rx
 };
 
 
+class db_flexrf_2200_tx_mimo_b : public db_flexrf_2200_tx
+{
+ public:
+  db_flexrf_2200_tx_mimo_b(usrp_basic_sptr usrp, int which);
+  int _refclk_divisor();
+};
+
+class db_flexrf_2200_rx_mimo_b : public db_flexrf_2200_rx
+{
+ public:
+  db_flexrf_2200_rx_mimo_b(usrp_basic_sptr usrp, int which);
+  int _refclk_divisor();
+};
+
+
 class db_flexrf_1800_tx_mimo_a : public db_flexrf_1800_tx
 {
  public:

@@ -155,6 +155,12 @@ instantiate_dbs(int dbid, usrp_basic_sptr usrp, int which_side)
   case(USRP_DBID_FLEX_2400_RX_MIMO_B):
     db.push_back(db_base_sptr(new db_flexrf_2400_rx_mimo_b(usrp, which_side)));
     break;
+  case(USRP_DBID_FLEX_2200_TX_MIMO_B):
+    db.push_back(db_base_sptr(new db_flexrf_2200_tx_mimo_b(usrp, which_side)));
+    break;
+  case(USRP_DBID_FLEX_2200_RX_MIMO_B):
+    db.push_back(db_base_sptr(new db_flexrf_2200_rx_mimo_b(usrp, which_side)));
+    break;
   case(USRP_DBID_FLEX_1800_TX_MIMO_B):
     db.push_back(db_base_sptr(new db_flexrf_1800_tx_mimo_b(usrp, which_side)));
     break;
