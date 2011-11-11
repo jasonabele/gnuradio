@@ -24,5 +24,5 @@ if "GRC_OUTPUT_DIRECTORY" in os.environ:
 
 #print "\n\n\n"
 for x in sys.argv[1:]:
-    print "compiling %s -> %s \n" % (x, output_dir)
+    print "compiling %s -> %s" % (x, output_dir)
     compile_one(x, output_dir)
