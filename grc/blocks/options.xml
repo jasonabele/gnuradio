@@ -69,6 +69,10 @@ else: self.stop(); self.wait()</callback>
 			<key>qt_gui</key>
 		</option>
 		<option>
+			<name>XMLRPC Server</name>
+			<key>xmlrpc</key>
+		</option>
+		<option>
 			<name>No GUI</name>
 			<key>no_gui</key>
 		</option>
@@ -89,7 +93,7 @@ else: self.stop(); self.wait()</callback>
 		<key>run_options</key>
 		<value>prompt</value>
 		<type>enum</type>
-		<hide>#if $generate_options() == 'no_gui' then 'none' else 'all'#</hide>
+		<hide>#if $generate_options() in ['no_gui', 'xmlrpc'] then 'none' else 'all'#</hide>
 		<option>
 			<name>Run to Completion</name>
 			<key>run</key>
@@ -105,8 +109,10 @@ else: self.stop(); self.wait()</callback>
 		<value>True</value>
 		<type>bool</type>
 		<hide>
-#if $generate_options() in ('qt_gui', 'wx_gui')
-	#if $run()
+#if $generate_options() in ['qt_gui', 'wx_gui', 'xmlrpc']
+	#if $run_options() == 'run'
+		all
+	#elif $run()
 		part
 	#else
 		none

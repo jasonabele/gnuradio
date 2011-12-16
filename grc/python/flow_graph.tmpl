@@ -77,7 +77,7 @@ class $(class_name)(gr.top_block, Qt.QWidget):
 		self.top_grid_layout = Qt.QGridLayout()
 		self.top_layout.addLayout(self.top_grid_layout)
 
-#elif $generate_options == 'no_gui'
+#elif $generate_options in ['no_gui', 'xmlrpc']
 class $(class_name)(gr.top_block):
 
 	def __init__($param_str):
@@ -254,6 +254,20 @@ if __name__ == '__main__':
 	tb.show()
 	qapp.exec_()
 	tb.stop()
+	#elif $generate_options == 'xmlrpc'
+	tb = $(class_name)($(', '.join($params_eq_list)))
+		#set $run_options = $flow_graph.get_option('run_options')
+		#if $run_options == 'prompt'
+			#if $flow_graph.get_option('run')
+	tb.start()
+			#end if
+	raw_input('Press Enter to quit: ')
+			#if $flow_graph.get_option('run')
+	tb.stop()
+			#end if
+		#elif $run_options == 'run'
+	tb.run()
+		#end if
 	#elif $generate_options == 'no_gui'
 	tb = $(class_name)($(', '.join($params_eq_list)))
 		#set $run_options = $flow_graph.get_option('run_options')
