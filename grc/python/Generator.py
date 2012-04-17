@@ -42,18 +42,21 @@ class Generator(object):
 		self._generate_options = self._flow_graph.get_option('generate_options')
 		if self._generate_options == 'hb':
 			self._mode = HIER_BLOCK_FILE_MODE
-			dirname = HIER_BLOCKS_LIB_DIR
 		else:
 			self._mode = TOP_BLOCK_FILE_MODE
-			dirname = os.path.dirname(file_path)
-			#handle the case where the directory is read-only
-			#in this case, use the system's temp directory
-			if not os.access(dirname, os.W_OK):
-				dirname = tempfile.gettempdir()
+
+		dirname = os.path.dirname(file_path)
+		#handle the case where the directory is read-only
+		#in this case, use the system's temp directory
+		if not os.access(dirname, os.W_OK):
+			dirname = tempfile.gettempdir()
+
 		filename = self._flow_graph.get_option('id') + '.py'
 		self._file_path = os.path.join(dirname, filename)
+		self._generate_path = dirname
 
 	def get_file_path(self): return self._file_path
+	def get_generate_path(self): return self._generate_path
 
 	def write(self):
 		#do throttle warning
@@ -66,7 +69,7 @@ Add a Misc->Throttle block to your flow graph to avoid CPU congestion.''')
 		open(self.get_file_path(), 'w').write(str(self))
 		if self._generate_options == 'hb':
 			#convert hier block to xml wrapper
-			convert_hier.convert_hier(self._flow_graph, self.get_file_path())
+			convert_hier.convert_hier(self._flow_graph, self.get_generate_path(), self._flow_graph.get_option('id'))
 		os.chmod(self.get_file_path(), self._mode)
 
 	def get_popen(self):
