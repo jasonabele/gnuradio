@@ -20,8 +20,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 from Constants import BLOCK_DTD
 from .. base import ParseXML
 from .. base import odict
+import os.path
 
-def convert_hier(flow_graph, python_file):
+def convert_hier(flow_graph, generate_dir, module_class_name):
 	#extract info from the flow graph
 	input_sigs = flow_graph.get_io_signaturev('in')
 	output_sigs = flow_graph.get_io_signaturev('out')
@@ -36,7 +37,7 @@ def convert_hier(flow_graph, python_file):
 	block_n['name'] = block_name
 	block_n['key'] = block_key
 	block_n['category'] = block_category
-	block_n['import'] = 'execfile("%s")'%python_file
+	block_n['import'] = 'from %s import %s' % (module_class_name, module_class_name)
 	#make data
 	if parameters: block_n['make'] = '%s(\n\t%s,\n)'%(
 		block_key,
@@ -72,8 +73,8 @@ def convert_hier(flow_graph, python_file):
 		source_n['vlen'] = output_sig['vlen']
 		block_n['source'].append(source_n)
 	#doc data
-	block_n['doc'] = "%s\n%s\n%s"%(block_author, block_desc, python_file)
+	block_n['doc'] = "%s\n%s\n%s"%(block_author, block_desc, module_class_name + '.py')
 	#write the block_n to file
-	xml_file = python_file + '.xml'
-	ParseXML.to_file({'block': block_n}, xml_file)
-	ParseXML.validate_dtd(xml_file, BLOCK_DTD)
+	xml_file = module_class_name + '.xml'
+	ParseXML.to_file({'block': block_n}, os.path.join(generate_dir, xml_file))
+	ParseXML.validate_dtd(os.path.join(generate_dir, xml_file), BLOCK_DTD)
